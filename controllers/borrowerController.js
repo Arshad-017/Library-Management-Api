@@ -1,6 +1,6 @@
 const {  addBorrowerToDB , getAllBorrowerFromDB , getBorrowerByIDFromDB , updateBorrowerInDB , deleteBorrowerFromDB ,borrowBookFromDB , returnBookFromDB } = require('../utillity/borrower-utility');
 const ErrorConstants = require('../utillity/error-contstant')
-
+const { borrowEmail } = require('./emailController');
 
 async function addBorrower(req, resp ,next){
     try{
@@ -85,6 +85,14 @@ async function borrowBook(req, resp , next){
     try {
         const response = await borrowBookFromDB(req.params.id , req);
         if (response && Object.keys(response).length > 0) {
+            let emailBody = {
+                to : response.email ,
+                subject : "Book Borrowed Successfully",
+                text : `Dear ${response.name},\n\nYou have successfully borrowed the book with ID: ${req.params.id}.\n\nThank you for using our library services!`,
+                html : `<p>Dear ${response.name},</p><p>You have successfully borrowed the book with ID: ${req.params.id}.</p><p>Thank you for using our library services!</p>`
+            }
+            req.body.mail = emailBody;
+            borrowEmail(req, resp, next);
             resp.status(201).json({
                 "message": ErrorConstants.BORROWED_BOOK_SUCCESSFULLY ,
             })
@@ -103,6 +111,14 @@ async function returnBook(req, resp , next){
     try {
         const response = await returnBookFromDB(req.params.id , req);
         if (response && Object.keys(response).length > 0) {
+            let emailBody = {
+                to : response.email ,
+                subject : "Book Returned Successfully",
+                text : `Dear ${response.name},\n\nYou have successfully returned the book with ID: ${req.params.id}.\n\nThank you for using our library services!`,
+                html : `<p>Dear ${response.name},</p><p>You have successfully returned the book with ID: ${req.params.id}.</p><p>Thank you for using our library services!</p>`
+            }
+            req.body.mail = emailBody;
+            borrowEmail(req, resp, next);
             resp.status(201).json({
                 "message":  ErrorConstants.BOOK_RETURN_SUCCESSFULLY 
             })

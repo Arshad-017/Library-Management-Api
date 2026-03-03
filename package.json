@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "run" : "node app.js"
+    "run": "node app.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -19,6 +19,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.0",
     "morgan": "~1.9.1",
+    "nodemailer": "^8.0.1",
     "swagger-autogen": "^2.23.7",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
