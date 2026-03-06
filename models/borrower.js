@@ -17,6 +17,10 @@ const borrowerSchema = new mongoose.Schema({
     borrowedBooks : {
         type : Array ,
         required : false
+    },
+    phone : {
+        type : String,
+        required : true
     }
 })
 
