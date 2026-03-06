@@ -1,6 +1,6 @@
 const { isUserAlreadyExists , addUser , userLogin } = require("../utillity/user-utility");
 const ErrorConstants = require('../utillity/error-contstant')
-
+const { addBorrowerToDB } = require('../utillity/borrower-utility')
 async function register(req , res , next) {
         try {
            const isUserExist = await isUserAlreadyExists(req.body.name);
@@ -9,6 +9,15 @@ async function register(req , res , next) {
            }
            else{
                 let response = await  addUser(req.body);
+                if(req.body.role == 'borrower'){
+                    let borrower = {
+                        name : req.body.name ,
+                        email  : req.body.name ,
+                        phone : req.body.phone ,
+                        borrowedBooks : []
+                    }
+                   let borrowerResponse = await addBorrowerToDB(borrower); 
+                }
                 res.status(201).json({ message: ErrorConstants.USER_ADDED_SUCCESSFULLY , response : response});
            }
        }
