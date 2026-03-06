@@ -20,8 +20,8 @@ const options = {
                 description: "Local server"
             },
             {
-                url: "<your live url here>",
-                description: "Live server"
+                url: "https://library-management-api-azure-eight.vercel.app/",
+                description: "Production Server"
             },
         ],
         components: {
